@@ -10,7 +10,7 @@ class Location extends Model
     use HasFactory;
     protected $table = 'location';
     protected $primaryKey = 'loc_id';
-    protected $fillable = ['loc_DateDebut', 'loc_DateFin', 'loc_PrixTotal', 'loc_equ_id', 'loc_EtatEquipement', 'Fk_loc_paie', 'Fk_loc_cli'];
+    protected $fillable = ['loc_DateDebut', 'loc_DateFin', 'loc_PrixTotal', 'Fk_loc_equ_id', 'loc_EtatEquipement', 'Fk_loc_paie', 'Fk_loc_cli'];
 
     public function paiement()
     {
@@ -22,10 +22,11 @@ class Location extends Model
         return $this->belongsTo(Client::class, 'Fk_loc_cli', 'cli_id');
     }
 
-    public function equipement()
+    public function location()
     {
-        return $this->belongsTo(Equipement::class, 'loc_equ_id', 'equ_id');
+        return $this->belongsTo(Location::class, 'Fk_loc_equ_id', 'equ_id');
     }
+    
 
  
 

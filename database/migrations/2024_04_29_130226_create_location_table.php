@@ -18,12 +18,13 @@ return new class extends Migration
             $table->date('loc_DateDebut');
             $table->date('loc_DateFin');
             $table->double('loc_PrixTotal');
-            $table->integer('loc_equ_id'); // si
+            $table->integer('Fk_loc_equ_id')->unsigned();
             $table->string('loc_EtatEquipement');
-            $table->integer('Fk_loc_paie')->unsigned(); // Assurez-vous que Fk_loc_paie est unsigned
+            $table->integer('Fk_loc_paie')->unsigned(); 
             $table->foreign('Fk_loc_paie')->references('pai_id')->on('paiement');
-            $table->integer('Fk_loc_cli')->unsigned(); // Assurez-vous que Fk_loc_cli est unsigned
+            $table->integer('Fk_loc_cli')->unsigned(); 
             $table->foreign('Fk_loc_cli')->references('cli_id')->on('client');
+            $table->foreign('Fk_loc_equ_id')->references('equ_id')->on('equipement');
             $table->timestamps();
 
 

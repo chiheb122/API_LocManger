@@ -20,12 +20,6 @@ return new class extends Migration
             $table->double('equ_PrixParJour');
             $table->integer('equ_StockDisponible');
             $table->string('equ_Catégorie');
-            $table->unsignedInteger('FK_loc_equi')->nullable();
-            $table->foreign('FK_loc_equi')
-                  ->references('loc_id')
-                  ->on('location')
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
             $table->timestamps();
         });
 

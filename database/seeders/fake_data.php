@@ -178,6 +178,31 @@ class fake_data extends Seeder
                 'SP_pieid' => 3,
             ],
         ]);
+        
+        // Seed the materiels table
+        DB::table('equipement')->insert([
+            [
+                'equ_Nom' => 'Vélo de montagne',
+                'equ_Catégorie' => 'vélo',
+                'equ_StockDisponible' => 10,
+                'equ_PrixParJour' => 15.00,
+                'equ_Description' => 'Vélo de montagne pour les sentiers difficiles',
+            ],
+            [
+                'equ_Nom' => 'Raquette de tennis',
+                'equ_Catégorie' => 'raquette',
+                'equ_StockDisponible' => 20,
+                'equ_PrixParJour' => 5.00,
+                'equ_Description' => 'Raquette de tennis pour les débutants',
+            ],
+            [
+                'equ_Nom' => 'Kayak',
+                'equ_Catégorie' => 'kayak',
+                'equ_StockDisponible' => 5,
+                'equ_PrixParJour' => 25.00,
+                'equ_Description' => 'Kayak pour les amateurs de sports nautiques',
+            ],
+        ]);
 
         // Seed the location table
         DB::table('location')->insert([
@@ -185,7 +210,7 @@ class fake_data extends Seeder
                 'loc_DateDebut' => '2024-05-01',
                 'loc_DateFin' => '2024-05-10',
                 'loc_PrixTotal' => 60.00,
-                'loc_equ_id' => 1,
+                'Fk_loc_equ_id' => 1,
                 'loc_EtatEquipement' => 'en bon état',
                 'Fk_loc_paie' => 1,
                 'Fk_loc_cli' => 1,
@@ -194,7 +219,7 @@ class fake_data extends Seeder
                 'loc_DateDebut' => '2024-05-02',
                 'loc_DateFin' => '2024-05-11',
                 'loc_PrixTotal' => 120.00,
-                'loc_equ_id' => 2,
+                'Fk_loc_equ_id' => 2,
                 'loc_EtatEquipement' => 'en bon état',
                 'Fk_loc_paie' => 2,
                 'Fk_loc_cli' => 2,
@@ -203,7 +228,7 @@ class fake_data extends Seeder
                 'loc_DateDebut' => '2024-05-03',
                 'loc_DateFin' => '2024-05-12',
                 'loc_PrixTotal' => 25.00,
-                'loc_equ_id' => 3,
+                'Fk_loc_equ_id' => 3,
                 'loc_EtatEquipement' => 'en bon état',
                 'Fk_loc_paie' => 3,
                 'Fk_loc_cli' => 3,
@@ -235,31 +260,40 @@ class fake_data extends Seeder
             ],
         ]);
 
-        // Seed the materiels table
-        DB::table('equipement')->insert([
-            [
-                'equ_Nom' => 'Vélo de montagne',
-                'equ_Catégorie' => 'vélo',
-                'equ_StockDisponible' => 10,
-                'equ_PrixParJour' => 15.00,
-                'equ_Description' => 'Vélo de montagne pour les sentiers difficiles',
-            ],
-            [
-                'equ_Nom' => 'Raquette de tennis',
-                'equ_Catégorie' => 'raquette',
-                'equ_StockDisponible' => 20,
-                'equ_PrixParJour' => 5.00,
-                'equ_Description' => 'Raquette de tennis pour les débutants',
-            ],
-            [
-                'equ_Nom' => 'Kayak',
-                'equ_Catégorie' => 'kayak',
-                'equ_StockDisponible' => 5,
-                'equ_PrixParJour' => 25.00,
-                'equ_Description' => 'Kayak pour les amateurs de sports nautiques',
-            ],
-        ]);
+            // Seed the evaluation table
+            DB::table('evaluation')->insert([
+                [
+                    'eva_commentaire' => 'Très bon service, équipement en excellent état.',
+                    'FK_eva_cli_id' => 1,
+                    'FK_equ_eva_id' => 1,
+                ],
+                [
+                    'eva_commentaire' => 'Service correct, quelques améliorations à prévoir.',
+                    'FK_eva_cli_id' => 2,
+                    'FK_equ_eva_id' => 2,
+                ],
+                [
+                    'eva_commentaire' => 'Équipement défectueux, mauvaise expérience.',
+                    'FK_eva_cli_id' => 3,
+                    'FK_equ_eva_id' => 3,
+                ],
+            ]);
 
+            // Seed the historique table
+            DB::table('historique')->insert([
+                [
+                    'hist_DateReparation' => '2024-05-10',
+                    'hist_equId' => 1,
+                ],
+                [
+                    'hist_DateReparation' => '2024-05-15',
+                    'hist_equId' => 2,
+                ],
+                [
+                    'hist_DateReparation' => '2024-05-20',
+                    'hist_equId' => 3,
+                ],
+            ]);
       
     }
 }
