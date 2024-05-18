@@ -104,4 +104,4 @@ Route::get('client_notification', 'App\Http\Controllers\NotificationController@n
 // une route pour enregistrer un user et le lier à un client
 Route::post('/client_user', 'App\Http\Controllers\ClientController@createClientForUser')->middleware('auth:sanctum');
 // une route pour afficher les locations avec les paiements et les clients
-Route::get('/locations_paiements_clients', 'App\Http\Controllers\LocationController@getLocationsWithPaymentandUser')->middleware('auth:sanctum');
+Route::get('/locations_paiements_clients', 'App\Http\Controllers\LocationController@getLocationsWithPaymentandUser')->middleware(['auth:sanctum', AdminMiddleware::class]);
