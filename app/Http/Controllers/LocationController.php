@@ -40,4 +40,9 @@ class LocationController extends Controller
     {
         return $this->locationService->deleteLocation($id);
     }
+
+    public function getLocationsWithPaymentandUser()
+    {
+        return $this->locationService->getLocationsWithPaymentandUser();
+    }
 }

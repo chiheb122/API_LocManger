@@ -14,7 +14,7 @@ class Location extends Model
 
     public function paiement()
     {
-        return $this->belongsTo(Paiement::class, 'Fk_loc_paie', 'paie_id');
+        return $this->belongsTo(Paiement::class, 'Fk_loc_paie', 'pai_id');
     }
 
     public function client()

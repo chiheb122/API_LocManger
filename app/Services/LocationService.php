@@ -3,6 +3,8 @@
 namespace App\Services;
 use Illuminate\Http\Request;
 use App\Models\Location;
+use App\Models\Paiement;
+use App\Models\Client;
 
 class LocationService{
     public function getAllLocations(){
@@ -99,5 +101,21 @@ class LocationService{
             ], 404);
         }
     }
+
+
+    // une fonction pour récupérer retourner le nombre de locations pour chaque utilisateur avec les informations de paiement
+    public function getLocationsWithPaymentandUser(){
+        // récupère toutes les locations avec les informations de paiement et de client
+        $locations = Location::with('paiement', 'client')->get();
+        // pour chaque location on ajoute le nombre de locations de clients
+        $locations->each(function ($location) {
+            $location->client->locations_count = $location->client->locations()->count();
+        });
+        return response()->json([
+            'status' => 'success',
+            'locations' => $locations
+        ], 200);
+    }
+        
 }
 ?>

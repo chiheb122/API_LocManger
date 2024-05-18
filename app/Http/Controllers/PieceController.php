@@ -12,9 +12,24 @@ class PieceController extends Controller
     public function index()
     {
         try {
-            return response()->json([
+                $query = Piece::query();
+                // Appliquer les filtres en fonction des paramètres de la requête
+                $query->when(request()->has('nom'), function ($q) {
+                    $q->where('piece_Nom', 'like', '%' . request('nom') . '%');
+                });
+
+                $query->when(request()->has('quantite'), function ($q) {
+                    $order = request('pie_quantite') === 'asc' ? 'asc' : 'desc';
+                    $q->orderBy('pie_quantite', $order);
+                });
+
+                $query->when(request()->has('stock'), function ($q) {
+                    $q->where('pie_quantite', '=', 0)->orderBy('pie_quantite', 'desc');
+                });
+
+            return response()->json([               
                 'status' => 'success',
-                'data' => Piece::all()
+                'data' => $query->get()
             ], 200);
         } catch (ModelNotFoundException $e) {
             return response()->json([

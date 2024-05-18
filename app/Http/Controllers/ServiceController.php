@@ -12,7 +12,7 @@ class ServiceController extends Controller
     public function index()
     {
         try {
-            $query = Service::query();
+        $query = Service::query();
         // si le paramètre 'statut' est présent dans l'URL
         if (request()->has('statut')) {
             // filtre les services par statut
@@ -25,11 +25,13 @@ class ServiceController extends Controller
             $query->where('ser_type', 'like', '%' . request('nom') . '%');
         }
 
-        // récupère tous les services
+        // récupère tous les services filtrés par statut et/ou nom avec l'employé associé
+
             $services = $query->get();
+            $services->load('employe');
             return response()->json([
                 'status' => 'success',
-                'data' => Service
+                'data' => $services
             ], 200);
         } catch (ModelNotFoundException $e) {
             return response()->json([
@@ -168,6 +170,7 @@ class ServiceController extends Controller
         }
        
     }
+
 
 
 

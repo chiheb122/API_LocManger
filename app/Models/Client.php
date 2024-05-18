@@ -20,6 +20,12 @@ class client extends Model
         return $this->hasOne(User::class, 'Fk_cli_id');
     }
 
+    //faire une relation avec la table location pour récupérer les locations d'un client
+    public function locations()
+    {
+        return $this->hasMany(Location::class, 'Fk_loc_cli', 'cli_id');
+    }
+
         
 
     }

@@ -10,16 +10,30 @@ class EquipementService{
             $query = Equipement::query();
        
 
-            // filtre par nom si le paramètre est présent
-            if (request()->has('nom')) {
-                $query->where('equ_Nom', 'like', '%' . request('nom') . '%');
-            }
+        // Appliquer les filtres et les tris en fonction des paramètres de la requête
+        $query->when(request()->has('nom'), function ($q) {
+            $q->where('equ_Nom', 'like', '%' . request('nom') . '%');
+        });
 
-            // Appliquer le tri par prix si le paramètre est présent
-            if (request()->has('prix')) {
-                $order = request('prix') === 'asc' ? 'asc' : 'desc';
-                $query->orderBy('equ_PrixParJour', $order);
-            }
+        $query->when(request()->has('prix'), function ($q) {
+            $order = request('prix') === 'asc' ? 'asc' : 'desc';
+            $q->orderBy('equ_PrixParJour', $order);
+        });
+
+        $query->when(request()->has('disponible'), function ($q) {
+            $q->where('equ_Disponible', '>', 0)->orderBy('equ_Disponible', 'desc');
+        });
+
+        $query->when(request()->has('created_at'), function ($q) {
+            $order = request('created_at') === 'asc' ? 'asc' : 'desc';
+            $q->orderBy('created_at', $order);
+        });
+        
+        $query->when(request()->has('type'), function ($q) {
+            $q->orderBy('equ_Catégorie', request('type'));
+
+        });
+            
 
 
         
