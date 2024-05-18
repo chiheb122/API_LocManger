@@ -14,6 +14,8 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\PieceController;
 use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\HistoriqueController;
+use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\UserMiddleware;
 
 
 
@@ -21,31 +23,34 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-// une route pour afficher tous les clients
-Route::get('/clients', 'App\Http\Controllers\ClientController@index');
-// une route pour afficher un client par son id
-Route::get('/client/{id}', 'App\Http\Controllers\ClientController@show');
-// une route pour ajouter un client
-Route::post('/client', 'App\Http\Controllers\ClientController@store')->middleware('auth:sanctum');
-// une route pour modifier un client
-Route::put('/client/{id}', 'App\Http\Controllers\ClientController@update');
-// une route pour supprimer un client
-Route::delete('/client/{id}', 'App\Http\Controllers\ClientController@destroy');
+// regrouper les routes pour les clients et les secueriser avec sanctum et le middleware admin pour seulement les admins
+Route::prefix('clients')->middleware('auth:sanctum', AdminMiddleware::class)->group(function () {
+    // une route pour afficher tous les clients
+    Route::get('/', 'App\Http\Controllers\ClientController@index');
+    // une route pour afficher un client par son id
+    Route::get('/{id}', 'App\Http\Controllers\ClientController@show');
+    // une route pour ajouter un client
+    Route::post('/', 'App\Http\Controllers\ClientController@store');
+    // une route pour modifier un client
+    Route::put('/{id}', 'App\Http\Controllers\ClientController@update');
+    // une route pour supprimer un client
+    Route::delete('/{id}', 'App\Http\Controllers\ClientController@destroy');
+});
 
 
 
-// regrouper les routes pour les équipements
+// regrouper les routes pour les équipements et s'assurer que seulement les admins peuvent les modifier, ajouter ou supprimer
 Route::prefix('equipements')->group(function () {
     // une route pour afficher tous les équipements
     Route::get('/', 'App\Http\Controllers\Equipement_Controller@index');
     // une route pour afficher un équipement par son id
     Route::get('/{id}', 'App\Http\Controllers\Equipement_Controller@show');
     // une route pour ajouter un équipement
-    Route::post('/', 'App\Http\Controllers\Equipement_Controller@store');
+    Route::post('/', 'App\Http\Controllers\Equipement_Controller@store')->middleware(['auth:sanctum', AdminMiddleware::class]);
     // une route pour modifier un équipement
-    Route::put('/{id}', 'App\Http\Controllers\Equipement_Controller@update');
+    Route::put('/{id}', 'App\Http\Controllers\Equipement_Controller@update')->middleware(['auth:sanctum', AdminMiddleware::class]);
     // une route pour supprimer un équipement
-    Route::delete('/{id}', 'App\Http\Controllers\Equipement_Controller@destroy');
+    Route::delete('/{id}', 'App\Http\Controllers\Equipement_Controller@destroy')->middleware(['auth:sanctum', AdminMiddleware::class]);
 
 });
 
@@ -61,7 +66,7 @@ Route::get('/promotions', 'App\Http\Controllers\PromotionController@index');
 Route::apiResource('notifications', 'App\Http\Controllers\NotificationController')->middleware('auth:sanctum');
 
 // routes automatiques pour les employés , sécurisées
-Route::apiResource('employes', 'App\Http\Controllers\EmployeController')->middleware('auth:sanctum');
+Route::apiResource('employes', 'App\Http\Controllers\EmployeController')->middleware(['auth:sanctum', AdminMiddleware::class]);
 
 // routes automatiques pour les services , sécurisées
 Route::apiResource('services', 'App\Http\Controllers\ServiceController')->middleware('auth:sanctum');
