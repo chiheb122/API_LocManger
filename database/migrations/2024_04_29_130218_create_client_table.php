@@ -17,7 +17,7 @@ return new class extends Migration
             $table->increments('cli_id')->cascadeOnDelete();
             $table->string('cli_nom');
             $table->string('cli_prenom');
-            $table->integer('cli_note')-> default(0);
+            $table->integer('cli_note')->nullable();
             $table->integer('cli_tel');
             $table->string('cli_adresse');
             $table->string('cli_ville');

@@ -102,6 +102,6 @@ Route::get('/servic_pieces/{id}', 'App\Http\Controllers\ServiceController@Avecpi
 // une route pour afficher les notifications AVEC les clients et les notifications
 Route::get('client_notification', 'App\Http\Controllers\NotificationController@notificationsWithClient')->middleware('auth:sanctum');
 // une route pour enregistrer un user et le lier à un client
-Route::post('/client_user', 'App\Http\Controllers\ClientController@createClientForUser')->middleware('auth:sanctum');
+Route::post('/client_user', 'App\Http\Controllers\ClientController@createClientForUser');
 // une route pour afficher les locations avec les paiements et les clients
 Route::get('/locations_paiements_clients', 'App\Http\Controllers\LocationController@getLocationsWithPaymentandUser')->middleware(['auth:sanctum', AdminMiddleware::class]);
