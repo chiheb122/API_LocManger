@@ -68,7 +68,10 @@ class NotificationController extends Controller
 
     public function notificationsWithClient()
     {
-        return Notification::with('client')->get();
+        return response()->json([
+            'status' => 'success',
+            'data' => Notification::with('client')->get()
+        ], 200);
     }
 
 }
