@@ -23,7 +23,7 @@ return new class extends Migration
             $table->integer('Fk_loc_paie')->unsigned(); 
             $table->foreign('Fk_loc_paie')->references('pai_id')->on('paiement');
             $table->integer('Fk_loc_cli')->unsigned(); 
-            $table->foreign('Fk_loc_cli')->references('cli_id')->on('client');
+            $table->foreign('Fk_loc_cli')->references('cli_id')->on('client')->onDelete('cascade');
             $table->foreign('Fk_loc_equ_id')->references('equ_id')->on('equipement');
             $table->timestamps();
 

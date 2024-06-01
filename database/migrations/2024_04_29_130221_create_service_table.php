@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('service', function (Blueprint $table) {
             $table->increments('ser_id');
             $table->unsignedInteger('cli_id');
-            $table->foreign('cli_id')->references('cli_id')->on('client');
+            $table->foreign('cli_id')->references('cli_id')->on('client')->onDelete('cascade');
             $table->string('ser_type');
             $table->double('ser_cout');
             $table->string('ser_statuts');

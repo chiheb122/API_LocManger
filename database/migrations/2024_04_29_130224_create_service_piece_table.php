@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('service_piece', function (Blueprint $table) {
             $table->increments('SP_serid');
             $table->unsignedInteger('SP_pieid');
-            $table->foreign('SP_serid')->references('ser_id')->on('service');
-            $table->foreign('SP_pieid')->references('pie_id')->on('piece');
+            $table->foreign('SP_serid')->references('ser_id')->on('service')->onDelete('cascade');
+            $table->foreign('SP_pieid')->references('pie_id')->on('piece')->onDelete('cascade');
             $table->primary(['SP_serid', 'SP_pieid']);
             $table->timestamps();
 

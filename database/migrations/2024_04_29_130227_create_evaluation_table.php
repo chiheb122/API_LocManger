@@ -17,7 +17,7 @@ return new class extends Migration
             $table->increments('eva_id');
             $table->string('eva_commentaire');
             $table->unsignedInteger('FK_eva_cli_id');
-            $table->foreign('FK_eva_cli_id')->references('cli_id')->on('client');
+            $table->foreign('FK_eva_cli_id')->references('cli_id')->on('client')->onDelete('cascade');
             $table->unsignedInteger('FK_equ_eva_id');
             $table->foreign('FK_equ_eva_id')->references('equ_id')->on('equipement')->onDelete('cascade');
             $table->timestamps();
