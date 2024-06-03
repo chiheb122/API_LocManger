@@ -62,20 +62,35 @@ public function index()
         }
     }
 
-    public function updatePaiement($id, array $data)
+    // updatePaiement function with Request and id parameters to update a paiement from json data
+    public function updatePaiement(Request $request, $id)
     {
-        $paiement = Paiement::find($id);
-        if ($paiement) {
-            $paiement->update($data);
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Paiement modifié avec succès'
-            ], 200);
+        // Vérifie si la requête contient des données et qui respectent la structure de la table Paiement
+        if ($request->isJson()) {
+            // Récupère les données du corps de la requête
+            $data = $request->json()->all();
+            // Récupère le paiement à modifier
+            $paiement = Paiement::find($id);
+            if ($paiement) {
+                // Met à jour le paiement
+                $paiement->update($data);
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Paiement modifié avec succès'
+                ], 200);
+            } else {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Paiement non trouvé'
+                ], 404);
+            }
         } else {
+            // La requête ne contient pas de données JSON
             return response()->json([
                 'status' => 'error',
-                'message' => 'Paiement non trouvé'
-            ], 404);
+                'message' => 'Les données JSON sont requises',
+                'error' => $request->json()->all()
+            ], 400);
         }
     }
 
