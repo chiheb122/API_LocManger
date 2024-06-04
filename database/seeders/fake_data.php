@@ -187,6 +187,7 @@ class fake_data extends Seeder
                 'equ_StockDisponible' => 10,
                 'equ_PrixParJour' => 15.00,
                 'equ_Description' => 'Vélo de montagne pour les sentiers difficiles',
+                'equ_Image' => 'C:\Users\admin\Downloads\02061396-1ef7-496b-97c3-10a1343cac80.jpg',
             ],
             [
                 'equ_Nom' => 'Raquette de tennis',
@@ -194,6 +195,7 @@ class fake_data extends Seeder
                 'equ_StockDisponible' => 20,
                 'equ_PrixParJour' => 5.00,
                 'equ_Description' => 'Raquette de tennis pour les débutants',
+                'equ_Image' => 'C:\Users\admin\Downloads\img-_1_.jpg',
             ],
             [
                 'equ_Nom' => 'Kayak',
@@ -201,6 +203,7 @@ class fake_data extends Seeder
                 'equ_StockDisponible' => 5,
                 'equ_PrixParJour' => 25.00,
                 'equ_Description' => 'Kayak pour les amateurs de sports nautiques',
+                'equ_Image' => 'C:\Users\admin\Downloads\img-_1_.jpg',
             ],
         ]);
 
