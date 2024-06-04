@@ -15,16 +15,21 @@ class PieceController extends Controller
                 $query = Piece::query();
                 // Appliquer les filtres en fonction des paramètres de la requête
                 $query->when(request()->has('nom'), function ($q) {
-                    $q->where('piece_Nom', 'like', '%' . request('nom') . '%');
+                    $q->where('pie_nom', 'like', '%' . request('nom') . '%');
                 });
 
                 $query->when(request()->has('quantite'), function ($q) {
-                    $order = request('pie_quantite') === 'asc' ? 'asc' : 'desc';
+                    $order = request('quantite') === 'asc' ? 'asc' : 'desc';
                     $q->orderBy('pie_quantite', $order);
                 });
 
                 $query->when(request()->has('stock'), function ($q) {
                     $q->where('pie_quantite', '=', 0)->orderBy('pie_quantite', 'desc');
+                });
+
+                $query->when(request()->has('sort'), function ($q) {
+                    $order = request('sort') === 'asc' ? 'asc' : 'desc';
+                    $q->orderBy('pie_dateEntree', $order);
                 });
 
             return response()->json([               

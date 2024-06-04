@@ -21,7 +21,7 @@ class EquipementService{
         });
 
         $query->when(request()->has('disponible'), function ($q) {
-            $q->where('equ_Disponible', '>', 0)->orderBy('equ_Disponible', 'desc');
+            $q->where('equ_StockDisponible', '>', 0)->orderBy('equ_Disponible', 'desc');
         });
 
         $query->when(request()->has('created_at'), function ($q) {
@@ -30,7 +30,7 @@ class EquipementService{
         });
         
         $query->when(request()->has('type'), function ($q) {
-            $q->orderBy('equ_Catégorie', request('type'));
+            $q->orderBy('equ_Catégorie') === 'asc' ? 'asc' : 'desc';
 
         });
             

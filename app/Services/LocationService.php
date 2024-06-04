@@ -105,17 +105,43 @@ class LocationService{
 
     // une fonction pour récupérer retourner le nombre de locations pour chaque utilisateur avec les informations de paiement
     public function getLocationsWithPaymentandUser(){
-        // récupère toutes les locations avec les informations de paiement et de client
-        $locations = Location::with('paiement', 'client')->get();
-        // pour chaque location on ajoute le nombre de locations de clients
-        $locations->each(function ($location) {
-            $location->client->locations_count = $location->client->locations()->count();
-        });
+        // récupère toutes les locations avec les informations de paiement et de client en fonction des filtres 
+        $query = Location::with('paiement', 'client');
+
+
+        
+        // filtre par nom de client
+        if (request()->has('client')) {
+            $query->whereHas('client', function ($query) {
+                $query->where('cli_nom', 'like', '%' . request()->input('client') . '%');
+            });
+        }
+
+        
+        // filtre par alphabet ascendant de nom de client
+        if (request()->has('sort')) {
+            $order = request('sort') === 'asc' ? 'asc' : 'desc';
+            $query->join('client', 'location.Fk_loc_cli', '=', 'client.cli_id')
+                  ->orderBy('client.cli_nom', $order);
+        }
+
+        // récupère les locations
+        $locations = $query->get();
+    // Ajouter le nombre de locations de chaque client
+    $locations->each(function ($location) {
+        $location->client->locations_count = $location->client->locations()->count();
+    });
+
+       // Filtre par nombre de locations descendantes
+       if (request()->has('locations_count')) {
+        $order = request('locations_count') === 'asc' ? 'asc' : 'desc';
+        $query->withCount('client')->orderBy('locations_count', $order);
+    }
+     
         return response()->json([
             'status' => 'success',
             'locations' => $locations
         ], 200);
     }
-        
 }
 ?>
