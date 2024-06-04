@@ -20,6 +20,7 @@ return new class extends Migration
             $table->double('equ_PrixParJour');
             $table->integer('equ_StockDisponible');
             $table->string('equ_Catégorie');
+            $table->string('equ_Image')->nullable();
             $table->timestamps();
         });
 

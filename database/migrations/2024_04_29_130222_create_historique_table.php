@@ -17,7 +17,7 @@ return new class extends Migration
             $table->increments('hist_id');
             $table->date('hist_DateReparation');
             $table->unsignedInteger('hist_equId');
-            $table->foreign('hist_equId')->references('equ_id')->on('equipement');
+            $table->foreign('hist_equId')->references('equ_id')->on('equipement')->onDelete('cascade');
             $table->timestamps();
         });
 

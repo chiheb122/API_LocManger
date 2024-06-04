@@ -10,7 +10,7 @@ class Equipement extends Model
     use HasFactory;
     protected $table = 'equipement';
     protected $primaryKey = 'equ_id';
-    protected $fillable = ['equ_Description', 'equ_Nom', 'equ_PrixParJour', 'equ_StockDisponible', 'equ_Catégorie', 'FK_equ_eva_id', 'FK_loc_equi'];
+    protected $fillable = ['equ_Description', 'equ_Nom', 'equ_PrixParJour', 'equ_StockDisponible', 'equ_Catégorie', 'FK_equ_eva_id', 'FK_loc_equi', 'equ_Image'];
 
   
     public function location()
