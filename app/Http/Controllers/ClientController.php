@@ -43,4 +43,10 @@ class ClientController extends Controller
     {
         return $this->clientService->createClientForUser($request);
     }
+
+    // avoir les details d'un client authentifié
+    public function getAuthenticatedClient()
+    {
+        return $this->clientService->getAuthenticatedClient();
+    }
 }

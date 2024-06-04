@@ -136,4 +136,18 @@ class ClientService
             ], 400);
         }
     }
+
+    // une methode pour afficher seulement les détails du client authentifié
+    public function getAuthenticatedClient()
+    {
+        // Récupère l'utilisateur authentifié
+        $user = auth()->user();
+        // Récupère le client associé à l'utilisateur
+        $client = $user->client;
+        // Retourne une réponse JSON
+        return response()->json([
+            'status' => 'success',
+            'client' => $client
+        ], 200);
+    }
 }
